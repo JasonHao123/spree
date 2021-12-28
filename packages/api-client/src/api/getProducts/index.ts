@@ -4,54 +4,23 @@ import { deserializeSearchMetadata } from '../serializers/search';
 
 export default async function getProducts({ client, config }: ApiContext, params: GetProductsParams): Promise<ProductSearchResult> {
   try {
-    const { categoryId, term, optionTypeFilters, productPropertyFilters, priceFilter, page, itemsPerPage, sort } = params;
-    let include;
+    const url = new URL('/storefront/control/products', config.backendUrl);
+    console.log(url.href);
+      // Add parameters passed from composable as query strings to the URL
+      // params.id && url.searchParams.set('id', params.id);
+      // params.catId && url.searchParams.set('catId', params.catId);
+      // params.limit && url.searchParams.set('limit', params.limit);
 
-    if (config.spreeFeatures.fetchPrimaryVariant) {
-      include = 'primary_variant,default_variant,variants.option_values,option_types,taxons,images';
-    } else {
-      include = 'default_variant,variants.option_values,option_types,taxons,images';
-    }
+      // Use axios to send a GET request
+      const result = await client.get(url.href,{
+        params: {
+          message: 'hello'
+        }
+      });
 
-    const optionValueIds = optionTypeFilters?.map(filter => filter.optionValueId);
-    const properties = productPropertyFilters?.reduce((result, filter) => ({ ...result, [filter.productPropertyName]: filter.productPropertyValue }), {});
-
-    const result = await client.products.list(
-      undefined,
-      {
-        filter: {
-          taxons: categoryId,
-          option_value_ids: optionValueIds?.join(','),
-          // TODO update type definition in Spree Storefront SDK
-          properties: properties as any,
-          price: priceFilter,
-          name: term
-        },
-        fields: {
-          product: 'name,slug,sku,description,primary_variant,default_variant,variants,option_types,taxons',
-          variant: 'sku,price,display_price,in_stock,product,images,option_values,is_master'
-        },
-        include,
-        page,
-        sort,
-        per_page: itemsPerPage
-      }
-    );
-
-    if (result.isSuccess()) {
-      const data = result.success();
-      const productsData = addHostToProductImages(data, config);
-
-      return {
-        data: deserializeLimitedVariants(productsData),
-        meta: deserializeSearchMetadata(data.meta, optionTypeFilters, productPropertyFilters)
-      };
-    } else {
-      throw result.fail();
-    }
+    return result.data;
   } catch (e) {
     console.error(e);
     throw e;
   }
 }
-

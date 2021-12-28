@@ -1,15 +1,19 @@
 export type Category = {
   id: number;
-  name: string;
-  slug: string;
+  label: string;
+  isCurrent: boolean;
   items?: Category[];
-  parent?: Category;
+  breadcrumbs?: Breadcrumb[];
 };
 
-export type CategorySearchResult = {
-  root: Category;
-  current: Category;
-};
+// export type CategorySearchResult = {
+//   root: Category;
+//   current: Category;
+// };
+export type Breadcrumb = {
+  text: string,
+  link: string,
+}
 
 export type GetCategoryParams = {
   categorySlug: string;

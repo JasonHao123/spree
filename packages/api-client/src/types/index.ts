@@ -1,4 +1,4 @@
-import { Client } from '@spree/storefront-api-v2-sdk';
+// import { Client } from '@spree/storefront-api-v2-sdk';
 import { IOAuthToken } from '@spree/storefront-api-v2-sdk/types/interfaces/Token';
 
 export * from './cart';
@@ -43,7 +43,7 @@ export type ApiConfig = {
 }
 
 export type ApiContext = {
-  client: Client;
+  client: any;
   config: ApiConfig;
 }
 

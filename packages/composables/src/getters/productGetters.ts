@@ -45,35 +45,18 @@ const findImageStyleUrlByDimensions = (image: Image, width: number, height: numb
 };
 
 export const getProductGallery = (product: ProductVariant): AgnosticMediaGalleryItem[] => {
-  if (!product) return [];
-
-  const findSmallImageStyle = (image: Image) => findImageStyleUrlByDimensions(image, 240, 240);
-  const findNormalImageStyle = (image: Image) => findImageStyleUrlByDimensions(image, 350, 468);
-  const findBigImageStyle = (image: Image) => findImageStyleUrlByDimensions(image, 650, 870);
-
-  return product.images.map((image) => ({
-    mobile: { url: findSmallImageStyle(image) },
-    desktop: { url: findNormalImageStyle(image) },
-    big: { url: findBigImageStyle(image) },
-    alt: product.name
-  })) as any;
+  return [
+    {
+      small: 'https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/081223_1_large.jpg',
+      normal: 'https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/081223_1_large.jpg',
+      big: 'https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/081223_1_large.jpg'
+    }
+  ];
 };
 
 export const getProductCoverImage = (product: ProductVariant): string => {
-  if (!product) return undefined;
+  return 'https://s3-eu-west-1.amazonaws.com/commercetools-maximilian/products/081223_1_large.jpg';
 
-  const mainProductImage = product.images[0];
-  if (!mainProductImage) {
-    return undefined;
-  }
-
-  const styles = mainProductImage.styles;
-  if (!styles || styles.length === 0) {
-    return undefined;
-  }
-
-  const largestStyle = styles.reduce((prev, curr) => curr.height > prev.height ? curr : prev);
-  return largestStyle.url;
 };
 
 export const getProductFiltered = (products: ProductVariant[], filters: ProductVariantFilters | any = {}): ProductVariant[] => {

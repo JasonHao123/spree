@@ -376,12 +376,9 @@ export default {
     const activeCategory = computed(() => {
       const items = categoryTree.value.items;
 
-      if (!items) {
-        return '';
-      }
 
-      const category = items.find(({ isCurrent, items }) => isCurrent || items.find(({ isCurrent }) => isCurrent));
-      return category?.label || items[0]?.label;
+        return '';
+
     });
 
     onSSR(async () => {

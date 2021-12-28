@@ -2,32 +2,16 @@ import { CategoryGetters, AgnosticCategoryTree, AgnosticBreadcrumb } from '@vue-
 import { Category } from '@vue-storefront/spree-api/src/types';
 
 export const getCategoryTree = (categories: any): AgnosticCategoryTree => {
-  const { root, current } = categories;
+  console.log("categories");
+  console.log(categories);
+  console.log("-------");
 
-  const itemToTree = (category: Category) => ({
-    label: category.name,
-    slug: category.slug,
-    items: category.items.map(itemToTree),
-    isCurrent: category.id === current.id
-  });
-
-  return itemToTree(root);
+  return categories;
 };
 
 export const getCategoryBreadcrumbs = (category: Category): AgnosticBreadcrumb[] => {
-  const breadcrumbs = [{ text: 'Home', link: '/' }];
 
-  const buildBreadcrumbs = (category) => {
-    if (category.parent) buildBreadcrumbs(category.parent);
-
-    breadcrumbs.push({
-      text: category.name,
-      link: `/c/${category.slug}`
-    });
-  };
-  buildBreadcrumbs(category);
-
-  return breadcrumbs;
+  return category.breadcrumbs;
 };
 
 const categoryGetters: CategoryGetters<Category> = {

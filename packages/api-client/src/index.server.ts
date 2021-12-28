@@ -38,6 +38,8 @@ import makeOrder from './api/makeOrder';
 import forgotPassword from './api/forgotPassword';
 import resetPassword from './api/resetPassword';
 
+import axios from 'axios';
+
 const defaultSettings = {
   backendUrl: 'https://demo.spreecommerce.org',
   spreeFeatures: {
@@ -47,12 +49,15 @@ const defaultSettings = {
 };
 
 const onCreate = (settings) => {
+  const client = axios.create({
+    baseURL: settings.backendUrl || defaultSettings.backendUrl
+  });
   return {
     config: {
       ...defaultSettings,
       ...settings
     },
-    client: makeClient({ host: settings.backendUrl || defaultSettings.backendUrl })
+    client
   };
 };
 
@@ -60,10 +65,15 @@ const tokenExtension: ApiClientExtension = {
   name: 'tokenExtension',
   hooks: (req, res) => {
     const auth = createAuthIntegration(req, res);
+    // console.log(req);
+    // console.log(req.headers);
 
+    const host = req.headers['host'];
+    console.log(host);
     return {
       beforeCreate: ({ configuration }) => ({
         ...configuration,
+        host,
         auth
       })
     };
