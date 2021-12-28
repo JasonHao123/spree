@@ -6,6 +6,7 @@ export default async function getProducts({ client, config }: ApiContext, params
   try {
     const url = new URL('/storefront/control/products', config.backendUrl);
     console.log(url.href);
+    console.log(params);
       // Add parameters passed from composable as query strings to the URL
       // params.id && url.searchParams.set('id', params.id);
       // params.catId && url.searchParams.set('catId', params.catId);
@@ -13,12 +14,12 @@ export default async function getProducts({ client, config }: ApiContext, params
 
       // Use axios to send a GET request
       const result = await client.get(url.href,{
-        params: {
-          message: 'hello'
-        }
+        params: params
       });
-
-    return result.data;
+      console.log("get data");
+      console.log(result.data);
+      console.log("---------------------");
+      return result.data;
   } catch (e) {
     console.error(e);
     throw e;

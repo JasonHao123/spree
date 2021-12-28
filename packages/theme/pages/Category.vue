@@ -366,7 +366,7 @@ export default {
     const { addItem: addItemToCart, isInCart } = useCart();
     const { addItem: addItemToWishlist } = useWishlist();
     const { result, search, loading } = useFacet();
-
+    console.log('-------category.vue--------');
     const products = computed(() => facetGetters.getProducts(result.value));
     const categoryTree = computed(() => facetGetters.getCategoryTree(result.value));
     const breadcrumbs = computed(() => facetGetters.getBreadcrumbs(result.value));
@@ -377,7 +377,7 @@ export default {
       const items = categoryTree.value.items;
 
 
-        return '';
+        return items[0].label;
 
     });
 

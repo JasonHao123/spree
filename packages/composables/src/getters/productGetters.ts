@@ -18,6 +18,7 @@ export const getProductName = (product: ProductVariant): string => product?.name
 export const getProductSlug = (product: ProductVariant): string => product.slug;
 
 export const getProductPrice = (product: ProductVariant): AgnosticPrice => {
+  console.log('-----------productGetter.getProductPrice----------');
   return {
     regular: product?.price?.current,
     special: undefined
@@ -60,24 +61,28 @@ export const getProductCoverImage = (product: ProductVariant): string => {
 };
 
 export const getProductFiltered = (products: ProductVariant[], filters: ProductVariantFilters | any = {}): ProductVariant[] => {
-  if (!products || products.length === 0) return [];
-
-  const filterAttributes = filters.attributes;
-
-  const filterByAttributes = (product: ProductVariant) => {
-    if (filterAttributes) {
-      return Object.entries(filterAttributes).every(([attrName, attrVal]) => {
-        const optionType = product.optionTypes.find((ot) => ot.name === attrName);
-        if (!optionType) return false;
-
-        return product.optionValues.some((ov) => ov.optionTypeId === optionType.id && ov.presentation === attrVal);
-      });
-    }
-
-    return true;
-  };
-
-  return products.filter(filterByAttributes);
+  console.log("getProductFiltered");
+  console.log(products);
+  console.log("-----------------");
+  // if (!products || products.length === 0) return [];
+  //
+  // const filterAttributes = filters.attributes;
+  //
+  // const filterByAttributes = (product: ProductVariant) => {
+  //   if (filterAttributes) {
+  //     return Object.entries(filterAttributes).every(([attrName, attrVal]) => {
+  //       const optionType = product.optionTypes.find((ot) => ot.name === attrName);
+  //       if (!optionType) return false;
+  //
+  //       return product.optionValues.some((ov) => ov.optionTypeId === optionType.id && ov.presentation === attrVal);
+  //     });
+  //   }
+  //
+  //   return true;
+  // };
+  //
+  // return products.filter(filterByAttributes);
+  return products;
 };
 
 export const getProductAttributes = (products: ProductVariant[] | ProductVariant, filterByAttributeName?: string[]): Record<string, AgnosticAttribute | string> => {

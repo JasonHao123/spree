@@ -31,6 +31,8 @@
 <script>
 import { SfMenuItem, SfModal } from '@storefront-ui/vue';
 import { useUiState } from '~/composables';
+import { computed, onMounted } from '@vue/composition-api';
+import { useFacet, facetGetters, productGetters } from '@vue-storefront/spree';
 
 export default {
   name: 'HeaderNavigation',
@@ -46,7 +48,7 @@ export default {
   },
   setup() {
     const { isMobileMenuOpen, toggleMobileMenu } = useUiState();
-    const categories = ['women', 'men'];
+    const categories = computed(() => facetGetters.getCatalogs());
 
     return {
       categories,

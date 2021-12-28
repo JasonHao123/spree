@@ -42,7 +42,14 @@ const getCategoryTree = (searchData: FacetSearchResult<SearchData>): AgnosticCat
   return searchData.data ? buildCategoryTree(searchData.data.categories) : {} as any;
 };
 
+const getCatalogs = () => {
+    const categories = ['women', 'men','test'];
+    return categories;
+}
+
 const getProducts = (searchData: FacetSearchResult<SearchData>): ProductVariant[] => {
+  console.log("-------facetGetters.getProducts----------");
+  console.log(searchData);
   return (searchData && searchData.data) ? searchData.data.products : [];
 };
 
@@ -63,6 +70,7 @@ const facetGetters: FacetsGetters<any, any> = {
   getGrouped,
   getAll,
   getProducts,
+  getCatalogs,
   getCategoryTree,
   getBreadcrumbs,
   getPagination
