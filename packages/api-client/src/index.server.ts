@@ -21,7 +21,6 @@ import removeFromCart from './api/removeFromCart';
 import clearCart from './api/clearCart';
 import applyCoupon from './api/applyCoupon';
 import removeCoupon from './api/removeCoupon';
-import getCheckout from './api/getCheckout';
 import saveCheckoutShippingAddress from './api/saveCheckoutShippingAddress';
 import saveCheckoutBillingAddress from './api/saveCheckoutBillingAddress';
 import createAuthIntegration from './api/authentication/integration';
@@ -104,7 +103,6 @@ const { createApiClient } = apiClientFactory<any, any>({
     clearCart,
     applyCoupon,
     removeCoupon,
-    getCheckout,
     saveCheckoutShippingAddress,
     saveCheckoutBillingAddress,
     getOrCreateCart,
